@@ -3,6 +3,7 @@
 <a name="menu"></a>
 ## Меню
 
+* [Главная страница](https://github.com/CodeWormD/cheat_sheets)
 * [Базовые запросы](#base)
 * [JOIN](#join)
     * [INNER JOIN](#innerjoin)
