@@ -1,9 +1,9 @@
-# SQL
-
 <a name="menu"></a>
 ## Меню
 
 * [Главная страница](https://github.com/CodeWormD/cheat_sheets)
+
+* [Создание таблицы](#create)
 * [Базовые запросы](#base)
 * [JOIN](#join)
     * [INNER JOIN](#innerjoin)
@@ -11,7 +11,41 @@
     * [RIGHT JOIN](#rightjoin)
     * [FULL JOIN](#fulljoin)
     * [CROSS JOIN](#crossjoin)
+* Изменение таблицы - [ALTER TABLE](#update)
+    * [Переименование таблицы](#rename)
+    * [Добавление колонки](#add_col)
+    * [Переименование колонки](#renam_col)
+    * [Удаление колонки](#del_col)
+    * [Удаление таблиц](#del_tab)
+    * [Ссылочная целостность](#linksstable)
 
+
+
+
+<a name="create"></a>
+## Пример создание таблицы
+
+``` SQL
+CREATE TABLE IF NOT EXISTS toppings(
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS ice_cream(
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS ice_cream_toppings(
+    id INTEGER PRIMARY KEY,
+    ice_cream_id INTEGER,
+    topping_id INTEGER NOT NULL,
+    PRIMARY KEY (ice_cream_id, toppings_id),
+    FOREIGN KEY(ice_cream_id) REFERENCES ice_cream(id),
+    FOREIGN KEY(topping_id) REFERENCES toppings(id)
+); 
+```
+##### ([Вернуться к оглавлению](#menu))
 
 <a name="base"></a>
 ## Базовые запросы
@@ -115,4 +149,56 @@ SELECT movies.name,
 FROM movies
 CROSS JOIN slogans; 
 ```
+##### ([Вернуться к оглавлению](#menu))
+
+
+<a name="update"></a>
+## Изменение таблицы - ALTER TABLE
+
+<a name="rename"></a>
+### Переименование таблицы
+``` SQL
+ALTER TABLE <имя таблицы> RENAME TO <новое имя таблицы>; 
+```
+
+<a name="add_col"></a>
+### Добавление колонки
+
+``` SQL
+ALTER TABLE <название таблицы> 
+ADD COLUMN <имя колонки> <тип колонки>;
+```
+
+<a name="rename_col"></a>
+### Переименование колонки
+``` SQL
+ALTER TABLE <название таблицы>
+RENAME COLUMN <старое имя колонки> TO <новое имя колонки>; 
+```
+
+<a name="del_col"></a>
+### Удаление колонки
+
+``` SQL
+ALTER TABLE <название таблицы>
+DROP COLUMN <имя колонки>; 
+```
+
+<a name="del_tab"></a>
+### Удаление таблицы
+
+``` SQL
+DROP TABLE <имя таблицы>; 
+```
+
+<a name="linksstable"></a>
+### Ссылочная целостность
+
+
+* Аномалия удаления (deletion anomaly): если из таблицы удалена строка, на которую ссылается внешний ключ.
+
+* Аномалия вставки (insertion anomaly): если добавлена запись с внешним ключом, но этот внешний ключ не соответствует ни одному первичному ключу из связанной таблицы.
+
+* Аномалии обновления (update anomaly): при изменении данных в одной строке они могут прийти в противоречие с данными из другой строки: например, изменён PK, на который ссылкется FK из другой таблицы.
+
 ##### ([Вернуться к оглавлению](#menu))
